@@ -1,6 +1,7 @@
 package kevinmaiani.lam2020.healthmonitor.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -17,6 +18,8 @@ public class User implements Serializable {
 
     private String email;
     private String password;
+
+//    private List<Report> reports = null;
 
     public User(String name, String lastName, String email, String password) {
         this.name = name;

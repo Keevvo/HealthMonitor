@@ -1,9 +1,11 @@
 package kevinmaiani.lam2020.healthmonitor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.room.Room;
 import kevinmaiani.lam2020.healthmonitor.Database.UserDao;
 import kevinmaiani.lam2020.healthmonitor.Database.UserDatabase;
+import kevinmaiani.lam2020.healthmonitor.Database.UserViewModel;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
 import android.app.ProgressDialog;
@@ -27,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private UserDao userDao;
     private ProgressDialog progressDialog;
 
+    private UserViewModel userViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +43,13 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setProgress(0);
 
-        database = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "mi-database.db")
-                .allowMainThreadQueries()
-                .build();
-
-
-        userDao = database.getUserDao();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+//        database = Room.databaseBuilder(getApplicationContext(), UserDatabase.class, "mi-database.db")
+//                .allowMainThreadQueries()
+//                .build();
+//
+//
+//        userDao = database.getUserDao();
 
         btSignIn = findViewById(R.id.btSignIn);
         btSignUp = findViewById(R.id.btSignUp);
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            User user = userDao.getUser(edtEmail.getText().toString(), edtPassword.getText().toString());
+                            User user = userViewModel.getUser(edtEmail.getText().toString(), edtPassword.getText().toString());
                             if(user!=null){
                                 Intent i = new Intent(MainActivity.this, UserActivity.class);
                                 i.putExtra("User", user);

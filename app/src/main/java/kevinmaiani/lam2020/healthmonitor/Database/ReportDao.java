@@ -6,25 +6,22 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Transaction;
 import androidx.room.Update;
 import kevinmaiani.lam2020.healthmonitor.Models.Report;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
 @Dao
-public interface UserDao {
-    @Query("SELECT * FROM User where email= :mail and password= :password")
-    User getUser(String mail, String password);
-
-    @Query("SELECT * FROM User")
-    List<User>getUsersReportById();
+public interface ReportDao {
 
     @Insert
-    void insert(User user);
+    void insert(Report report);
+
+    @Query("SELECT * from Report")
+    List<Report> getAllReports();
 
     @Update
-    void update(User user);
+    void update(Report report);
 
     @Delete
-    void delete(User user);
+    void delete(Report report);
 }

@@ -1,9 +1,11 @@
 package kevinmaiani.lam2020.healthmonitor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.room.Room;
 import kevinmaiani.lam2020.healthmonitor.Database.UserDao;
 import kevinmaiani.lam2020.healthmonitor.Database.UserDatabase;
+import kevinmaiani.lam2020.healthmonitor.Database.UserViewModel;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
 import android.app.ProgressDialog;
@@ -29,6 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     private UserDao userDao;
 
     private ProgressDialog progressDialog;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,12 @@ public class SignupActivity extends AppCompatActivity {
         btCancel = findViewById(R.id.btCancel);
         btRegister = findViewById(R.id.btRegister);
 
-        userDao = Room.databaseBuilder(this, UserDatabase.class, "mi-database.db")
-                .allowMainThreadQueries()
-                .build()
-                .getUserDao();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+//        userDao = Room.databaseBuilder(this, UserDatabase.class, "mi-database.db")
+//                .allowMainThreadQueries()
+//                .build()
+//                .getUserDao();
 
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +79,7 @@ public class SignupActivity extends AppCompatActivity {
                         public void run() {
                             User user = new User(edtName.getText().toString(), edtLastName.getText().toString(),
                                     edtEmail.getText().toString(), edtPassword.getText().toString());
-                            userDao.insert(user);
+                            userViewModel.insert(user);
                             progressDialog.dismiss();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }
