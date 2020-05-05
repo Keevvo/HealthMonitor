@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import kevinmaiani.lam2020.healthmonitor.Converters.Converters;
 import kevinmaiani.lam2020.healthmonitor.Models.Report;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
 @Database(entities = {User.class, Report.class}, version = 1)
+@TypeConverters({Converters.class})
     public abstract class ApplicationDatabase extends RoomDatabase {
         private static ApplicationDatabase INSTANCE;
         private static final String DB_NAME = "mi-database.db";

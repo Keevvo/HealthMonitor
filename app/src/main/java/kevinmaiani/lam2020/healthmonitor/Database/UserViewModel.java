@@ -2,6 +2,7 @@ package kevinmaiani.lam2020.healthmonitor.Database;
 
 import android.app.Application;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;

@@ -2,6 +2,7 @@ package kevinmaiani.lam2020.healthmonitor.Database;
 
 import android.app.Application;
 
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,9 @@ public class ReportViewModel  extends AndroidViewModel {
         super(application);
         reportDao = ApplicationDatabase.getDatabase(application).reportDao();
     }
-    public List<Report> getAllReports() {
-        return reportDao.getAllReports();
-    }
 
+    public List<Report> findReportForUser(int userId, Date creationDate) {return reportDao.findReportForUser(userId, creationDate);}
+    public List<Report> findReporyByUserId(int userId) {return reportDao.findReporyByUserId(userId);};
     public void insert(Report report) { reportDao.insert(report);}
     public void update(Report report) { reportDao.update(report);}
     public void delete(Report report) { reportDao.delete(report);}

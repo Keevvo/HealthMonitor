@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
@@ -11,7 +12,6 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import kevinmaiani.lam2020.healthmonitor.Converters.Converters;
 
-@TypeConverters({Converters.class})
 @Entity(tableName = "report",
         foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id",
@@ -22,16 +22,29 @@ public class Report  {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
+    @ColumnInfo(name = "id")
     private Integer id;
 
+    @TypeConverters({Converters.class})
+    @ColumnInfo(name = "creationDate")
     private Date creationDate;
+
+    @ColumnInfo(name = "relevantLevel")
     private int relevantLevel; //pass ENUM (create CLASS Level.java)
+
+    @ColumnInfo(name = "bodyTemperature")
     private int bodyTemperature;
+
+    @ColumnInfo(name = "bloodPressure")
     private int bloodPressure;
+
+    @ColumnInfo(name = "glycemicIndex")
     private int glycemicIndex;
+
+    @ColumnInfo(name = "note")
     private String note;
 
-    //private int user;
+    @ColumnInfo(name = "userId")
     private int userId;
 
     public Report()  {};
