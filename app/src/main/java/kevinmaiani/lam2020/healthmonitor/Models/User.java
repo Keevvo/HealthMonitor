@@ -1,7 +1,6 @@
 package kevinmaiani.lam2020.healthmonitor.Models;
 
 import java.io.Serializable;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

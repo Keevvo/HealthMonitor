@@ -2,9 +2,7 @@ package kevinmaiani.lam2020.healthmonitor;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.room.Room;
 import kevinmaiani.lam2020.healthmonitor.Database.UserDao;
-import kevinmaiani.lam2020.healthmonitor.Database.UserDatabase;
 import kevinmaiani.lam2020.healthmonitor.Database.UserViewModel;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
@@ -62,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         btCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         });
@@ -81,7 +79,7 @@ public class SignupActivity extends AppCompatActivity {
                                     edtEmail.getText().toString(), edtPassword.getText().toString());
                             userViewModel.insert(user);
                             progressDialog.dismiss();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         }
                     }, 1000);
 

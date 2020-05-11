@@ -2,14 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:showIn="navigation_View">
-
-    <item
-        android:id="@+id/save_report"
-        android:icon="@drawable/ic_save_report"
-        android:title="Save"
-        app:showAsAction="ifRoom"
-        />
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
@@ -29,12 +22,4 @@
             android:icon="@drawable/ic_settings"
             android:title="Impostazioni" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:title="Condividi" />
-        </menu>
-    </item>
 </menu>

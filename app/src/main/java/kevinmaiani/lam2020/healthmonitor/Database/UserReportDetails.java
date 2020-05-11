@@ -7,6 +7,7 @@ import androidx.room.Relation;
 import kevinmaiani.lam2020.healthmonitor.Models.Report;
 import kevinmaiani.lam2020.healthmonitor.Models.User;
 
+
 public class UserReportDetails {
 
     public UserReportDetails() {

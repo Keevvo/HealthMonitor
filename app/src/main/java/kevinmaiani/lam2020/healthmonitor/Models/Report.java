@@ -1,6 +1,5 @@
 package kevinmaiani.lam2020.healthmonitor.Models;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import androidx.annotation.NonNull;

@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ReportFragment extends Fragment {
 
-    public static ReportFragment newInstance() {
-        return (new ReportFragment());
+public class StatFragment extends Fragment {
+
+    public static StatFragment newInstance() {
+        return (new StatFragment());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reports, container, false);
+        return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 }

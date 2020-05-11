@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AddReportActivity"
-            android:parentActivityName=".UserActivity"/>
-        <activity android:name=".UserActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            </activity>
+        </activity>
         <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity" android:launchMode="singleTop">
+        <activity android:name=".LoginActivity" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
