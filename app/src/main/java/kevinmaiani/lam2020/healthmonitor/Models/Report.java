@@ -13,11 +13,11 @@ import kevinmaiani.lam2020.healthmonitor.Converters.Converters;
 
 @Entity(tableName = "report",
         foreignKeys = @ForeignKey(entity = User.class,
-        parentColumns = "id",
-        childColumns = "userId",
-        onDelete = ForeignKey.CASCADE),
-        indices = {@Index("creationDate"), @Index("userId")})
-public class Report  {
+                parentColumns = "id",
+                childColumns = "userId",
+                onDelete = ForeignKey.CASCADE),
+                indices = {@Index("creationDate"), @Index("userId")})
+public class Report {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -28,17 +28,17 @@ public class Report  {
     @ColumnInfo(name = "creationDate")
     private Date creationDate;
 
-    @ColumnInfo(name = "relevantLevel")
-    private int relevantLevel; //pass ENUM (create CLASS Level.java)
+    @ColumnInfo(name = "bodyTemperatureLevel")
+    private int bodyTemperatureLevel;
 
     @ColumnInfo(name = "bodyTemperature")
     private int bodyTemperature;
 
+    @ColumnInfo(name = "bloodPressureLevel")
+    private int bloodPressureLevel; //pass ENUM (create CLASS Level.java)
+
     @ColumnInfo(name = "bloodPressure")
     private int bloodPressure;
-
-    @ColumnInfo(name = "glycemicIndex")
-    private int glycemicIndex;
 
     @ColumnInfo(name = "note")
     private String note;
@@ -46,14 +46,15 @@ public class Report  {
     @ColumnInfo(name = "userId")
     private int userId;
 
-    public Report()  {};
+    public Report() {
+    }
 
-    public Report(@NonNull Date createDate, int relevantLevel, int bloodPressure, int bodyTemperature, int glycemicIndex, String note, int userId) {//        this.creationDate = creationDate;
+    public Report(@NonNull Date createDate, int bloodPressureLevel, int bloodPressure, int bodyTemperature, int bodyTemperatureLevel, String note, int userId) {//        this.creationDate = creationDate;
         this.creationDate = createDate;
-        this.relevantLevel = relevantLevel;
+        this.bloodPressureLevel = bloodPressureLevel;
         this.bloodPressure = bloodPressure;
         this.bodyTemperature = bodyTemperature;
-        this.glycemicIndex = glycemicIndex;
+        this.bodyTemperatureLevel = bodyTemperatureLevel;
         note = note != null ? note : "";
         this.note = note;
         this.userId = userId;
@@ -76,15 +77,12 @@ public class Report  {
         this.creationDate = (Date) creationDate.clone();
     }
 
-    public int getRelevantLevel() {
-        return relevantLevel;
+    public int getBloodPressureLevel() {
+        return bloodPressureLevel;
     }
 
-    public void setRelevantLevel(int relevantLevel) {
-        if(relevantLevel > 5)
-            throw new IllegalArgumentException();
-
-        this.relevantLevel = relevantLevel;
+    public void setBloodPressureLevel(int bloodPressureLevel) {
+        this.bloodPressureLevel = bloodPressureLevel;
     }
 
     public int getBloodPressure() {
@@ -103,12 +101,12 @@ public class Report  {
         this.bodyTemperature = bodyTemperature;
     }
 
-    public int getGlycemicIndex() {
-        return glycemicIndex;
+    public int getBodyTemperatureLevel() {
+        return bodyTemperatureLevel;
     }
 
-    public void setGlycemicIndex(int glycemicIndex) {
-        this.glycemicIndex = glycemicIndex;
+    public void setBodyTemperatureLevel(int bodyTemperatureLevel) {
+        this.bodyTemperatureLevel = bodyTemperatureLevel;
     }
 
     public String getNote() {
@@ -126,4 +124,5 @@ public class Report  {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
 }

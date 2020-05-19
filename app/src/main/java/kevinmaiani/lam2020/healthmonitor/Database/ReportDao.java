@@ -2,7 +2,7 @@ package kevinmaiani.lam2020.healthmonitor.Database;
 
 import java.util.Date;
 import java.util.List;
-
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,7 +17,7 @@ public interface ReportDao {
     void insert(Report report);
 
     @Query("SELECT * from Report")
-    List<Report> getAllReports();
+    LiveData<List<Report>> getAllReports();
 
     @Query("SELECT * FROM Report WHERE userId =:userId AND creationDate =:creationDate")
     List<Report> findReportForUser(int userId, Date creationDate);
@@ -29,4 +29,7 @@ public interface ReportDao {
 
     @Delete
     void delete(Report report);
+
+    @Query("DELETE FROM Report")
+    void deleteAllReports();
 }

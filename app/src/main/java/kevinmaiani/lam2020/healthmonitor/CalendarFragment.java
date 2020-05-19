@@ -17,11 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.Toast;
-
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 
 public class CalendarFragment extends Fragment {
 
@@ -33,7 +31,8 @@ public class CalendarFragment extends Fragment {
     private int userId;
     private ReportViewModel reportViewModel;
 
-    public static CalendarFragment newInstance(User user)  {
+
+    public static CalendarFragment newInstance(User user) {
         CalendarFragment calendarFragment = new CalendarFragment();
         Bundle args = new Bundle();
         args.putSerializable("User", user);
@@ -50,11 +49,12 @@ public class CalendarFragment extends Fragment {
         }
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-      View view =  inflater.inflate(R.layout.fragment_calendar, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         this.mCalendarView = view.findViewById((R.id.reportCalendar));
-        return(view);
+        return (view);
     }
 
     @Override
@@ -64,24 +64,14 @@ public class CalendarFragment extends Fragment {
             user = (User) savedInstanceState.getSerializable("KEY");
         }
         SharedPreferences sharedpreferences = this.getActivity().getSharedPreferences(MainActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        this.userId = sharedpreferences.getInt("userId",0);
+        this.userId = sharedpreferences.getInt("userId", 0);
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                calendarDate = new GregorianCalendar(year, month , dayOfMonth).getTime();
-
-                //List<Report> reportsUser = reportViewModel.findReporyByUserId(userId);
-
+                calendarDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
                 List<Report> reports = reportViewModel.findReportForUser(userId, calendarDate);
-                if((reports != null) && !reports.isEmpty())
-                {
-                    Toast.makeText(getContext(), "è gia presente un report in questa data", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Intent intent = new Intent(getActivity(), AddReportActivity.class);
-                   startActivityForResult(intent, ADD_REPORT_REQUEST);
-                }
-
+                Intent intent = new Intent(getActivity(), AddEditReportActivity.class);
+                startActivityForResult(intent, ADD_REPORT_REQUEST);
             }
         });
     }
@@ -91,17 +81,31 @@ public class CalendarFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_REPORT_REQUEST && resultCode == getActivity().RESULT_OK) {
-            int bodyTemperature = data.getIntExtra(AddReportActivity.EXTRA_BLOODPRESSURE,0);
-            int bloodPressure = data.getIntExtra(AddReportActivity.EXTRA_BLOODPRESSURE,0);
-            int bodyTemperaturePriority = data.getIntExtra(AddReportActivity.EXTRA_BLOODPRESSUREPRIORITY, 0);
-            int bloodPressurePriority = data.getIntExtra(AddReportActivity.EXTRA_BLOODPRESSUREPRIORITY, 0);
-            String note = data.getStringExtra(AddReportActivity.EXTRA_NOTE);
+            int bodyTemperature = data.getIntExtra(AddEditReportActivity.EXTRA_BODYTEMPERATURE, 0);
+            int bloodPressure = data.getIntExtra(AddEditReportActivity.EXTRA_BLOODPRESSURE, 0);
+            int bodyTemperaturePriority = data.getIntExtra(AddEditReportActivity.EXTRA_BODYTEMPERATUREPRIORITY, 0);
+            int bloodPressurePriority = data.getIntExtra(AddEditReportActivity.EXTRA_BLOODPRESSUREPRIORITY, 0);
+            String note = data.getStringExtra(AddEditReportActivity.EXTRA_NOTE);
 
+            Report summaryReport = new Report();
+            List<Report> reports = reportViewModel.findReportForUser(userId, calendarDate);
             Report report = new Report(calendarDate, bloodPressurePriority, bloodPressure, bodyTemperature, bodyTemperaturePriority, note, userId);
-            reportViewModel.insert(report);
+            if (reports.size() == 0) {
+                reportViewModel.insert(report);
+            } else {
+                Report old = reports.get(0);
+                Report average = new Report();
+                average.setCreationDate(report.getCreationDate());
+                average.setUserId(userId);
+                average.setBodyTemperature((old.getBodyTemperature() + report.getBodyTemperature()) / 2);
+                average.setBloodPressure((old.getBloodPressure() + report.getBloodPressure()) / 2);
+                average.setBloodPressureLevel((old.getBloodPressureLevel() + report.getBloodPressureLevel() / 2));
+                average.setBodyTemperatureLevel((old.getBodyTemperatureLevel() + report.getBodyTemperatureLevel() / 2));
+                reportViewModel.delete(old);
+                reportViewModel.insert(average);
+            }
             Toast.makeText(getActivity(), "Report salvato", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Toast.makeText(getActivity(), "Report non salvato", Toast.LENGTH_SHORT).show();
         }
 
@@ -110,7 +114,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //Save in Bundle when fragment is destroyed
+        //Save buttonTag in Bundle when fragment is destroyed
         outState.putSerializable("KEY", user);
     }
 
