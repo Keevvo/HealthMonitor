@@ -67,7 +67,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportHold
             bodyTemperatureText = itemView.findViewById(R.id.text_view_bodyTemperature);
             bloodPressureText = itemView.findViewById(R.id.text_view_bloodPressure);
             bodyTemperaturePriority = itemView.findViewById(R.id.text_view_bodyTemperature_priority);
-            bloodPressurePriority = itemView.findViewById(R.id.text_view_bloodPressure);
+            bloodPressurePriority = itemView.findViewById(R.id.text_view_bloodPressure_priority);
             note = itemView.findViewById(R.id.text_view_note);
 
             itemView.setOnClickListener(new View.OnClickListener() {
