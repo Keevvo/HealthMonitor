@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void showParamsFragment(){
-        if (this.fragmentStats == null) this.fragmentStats = StatFragment.newInstance();
+        if (this.fragmentStats == null) this.fragmentStats = HomeStatFragment.newInstance();
         this.startTransactionFragment(this.fragmentStats);
     }
 

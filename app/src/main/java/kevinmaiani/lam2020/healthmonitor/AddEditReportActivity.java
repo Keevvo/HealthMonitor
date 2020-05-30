@@ -57,7 +57,6 @@ public class AddEditReportActivity extends AppCompatActivity {
 
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
 
-
         editTextBodyTemperature = findViewById(R.id.edit_text_bodyTemperature);
         editTextBloodPressure = findViewById(R.id.edit_text_bloodPressure);
         editTextNote = findViewById(R.id.editText_note);
@@ -75,7 +74,7 @@ public class AddEditReportActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         final Date currentDate = (Date)intent.getSerializableExtra(EXTRA_DATE);
         if(intent.hasExtra(EXTRA_ID)) {
-            setTitle("Edit Report");
+            setTitle("Modifica Report");
             editTextBodyTemperature.setText(String.valueOf(intent.getIntExtra(EXTRA_BODYTEMPERATURE,1)));
             editTextBloodPressure.setText(String.valueOf(intent.getIntExtra(EXTRA_BLOODPRESSURE,1)));
             numberPickerBodyTemperature.setValue(intent.getIntExtra(EXTRA_BODYTEMPERATUREPRIORITY, 1));
@@ -83,7 +82,7 @@ public class AddEditReportActivity extends AppCompatActivity {
             editTextNote.setText(intent.getStringExtra(EXTRA_NOTE));
         }
         else {
-            setTitle("Add Note");
+            setTitle("Inserisci Report");
         }
 
         btnSaveReport.setOnClickListener(new View.OnClickListener() {
@@ -121,23 +120,12 @@ public class AddEditReportActivity extends AppCompatActivity {
         data.putExtra(EXTRA_DATE, currentDate);
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if(id != 1) {
+        if (id != 1) {
             data.putExtra(EXTRA_ID, id);
         }
 
         setResult(RESULT_OK, data);
         finish();
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.save_report:
-//                saveReport();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }//per bottone salva nel action bar
 }
 

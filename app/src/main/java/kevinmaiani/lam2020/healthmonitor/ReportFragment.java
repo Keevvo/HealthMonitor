@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +66,6 @@ public class ReportFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<Report> reports) {
                 //update RecyclerView
-                ArrayList<Report> listSummaryReportList = new ArrayList<Report>();
-
                 adapter.setReports(reports);
             }
         });
@@ -118,7 +115,6 @@ public class ReportFragment extends Fragment {
                 int bloodPressurePriority = data.getIntExtra(AddEditReportActivity.EXTRA_BLOODPRESSUREPRIORITY, 0);
                 String note = data.getStringExtra(AddEditReportActivity.EXTRA_NOTE);
                 Date calendarDate = (Date) data.getSerializableExtra(AddEditReportActivity.EXTRA_DATE);
-                int prova = userId;
 
                 Report report = new Report(calendarDate, bloodPressurePriority, bloodPressure, bodyTemperature, bodyTemperaturePriority, note, userId);
                 report.setId(id);

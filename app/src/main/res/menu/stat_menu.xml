@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/barChart_stat"
+        android:title="BarChart"
+        android:icon="@drawable/ic_bar_chart"/>
+
+    <item android:id="@+id/pieChart_stat"
+        android:title="PieChart"
+        android:icon="@drawable/ic_pie_chart"/>
+</menu>

@@ -69,7 +69,6 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 calendarDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
-                List<Report> reports = reportViewModel.findReportForUser(userId, calendarDate);
                 Intent intent = new Intent(getActivity(), AddEditReportActivity.class);
                 startActivityForResult(intent, ADD_REPORT_REQUEST);
             }
@@ -87,7 +86,6 @@ public class CalendarFragment extends Fragment {
             int bloodPressurePriority = data.getIntExtra(AddEditReportActivity.EXTRA_BLOODPRESSUREPRIORITY, 0);
             String note = data.getStringExtra(AddEditReportActivity.EXTRA_NOTE);
 
-            Report summaryReport = new Report();
             List<Report> reports = reportViewModel.findReportForUser(userId, calendarDate);
             Report report = new Report(calendarDate, bloodPressurePriority, bloodPressure, bodyTemperature, bodyTemperaturePriority, note, userId);
             if (reports.size() == 0) {
