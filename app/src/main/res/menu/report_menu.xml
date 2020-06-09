@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ReportFragment">
 
     <item
         android:id="@+id/delete_all_reports"
         android:title="Cancella tutti i report"
-        app:showAsAction="never"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/action_notification1"
+        android:icon="@drawable/ic_filter"
+        android:title="action_notification"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/all_reports"
+                android:title="Tutti i report"
+                android:orderInCategory="100"
+                />
+            <item
+                android:id="@+id/max_priority"
+                android:title="Massima Priorità"
+                android:orderInCategory="100"
+                />
+        </menu>
+    </item>
+
 </menu>

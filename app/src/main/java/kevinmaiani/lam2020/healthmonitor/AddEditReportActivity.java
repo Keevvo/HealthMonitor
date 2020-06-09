@@ -85,11 +85,7 @@ public class AddEditReportActivity extends AppCompatActivity {
             setTitle("Inserisci Report");
         }
 
-        btnSaveReport.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saveReport(currentDate);
-            }
-        });
+        btnSaveReport.setOnClickListener(v -> saveReport(currentDate));
     }
 
     private void saveReport(Date currentDate) {

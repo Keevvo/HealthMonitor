@@ -24,6 +24,10 @@ public interface ReportDao {
 
     @Query("SELECT * FROM Report WHERE userId =:userId")
     List<Report> findReporyByUserId(int userId);
+
+    @Query("SELECT * FROM Report WHERE userId =:userId AND bloodPressureLevel = 5 AND bodyTemperatureLevel = 5")
+    LiveData<List<Report>> findMaxPriorityReports(int userId);
+
     @Update
     void update(Report report);
 

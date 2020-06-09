@@ -28,9 +28,11 @@ import java.util.Date;
 import java.util.List;
 
 public class ReportFragment extends Fragment {
-    public static final int EDIT_REPORT_REQUEST = 2;
+    private static final int EDIT_REPORT_REQUEST = 2;
 
     private ReportViewModel reportViewModel;
+    private RecyclerView recyclerView;
+    private ReportAdapter adapter;
     private int userId;
 
     public static ReportFragment newInstance() {
@@ -54,11 +56,11 @@ public class ReportFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recycler_view);
+        recyclerView = getActivity().findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        final ReportAdapter adapter = new ReportAdapter();
+        adapter = new ReportAdapter();
         recyclerView.setAdapter(adapter);
         reportViewModel = ViewModelProviders.of(this).get(ReportViewModel.class);
 
@@ -82,19 +84,16 @@ public class ReportFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setOnItemClickListener(new ReportAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Report report) {
-                Intent intent = new Intent(getActivity(), AddEditReportActivity.class);
-                intent.putExtra(AddEditReportActivity.EXTRA_ID, report.getId());
-                intent.putExtra(AddEditReportActivity.EXTRA_DATE, report.getCreationDate());
-                intent.putExtra(AddEditReportActivity.EXTRA_BLOODPRESSURE, report.getBloodPressure());
-                intent.putExtra(AddEditReportActivity.EXTRA_BODYTEMPERATURE, report.getBodyTemperature());
-                intent.putExtra(AddEditReportActivity.EXTRA_BLOODPRESSUREPRIORITY, report.getBloodPressureLevel());
-                intent.putExtra(AddEditReportActivity.EXTRA_BODYTEMPERATUREPRIORITY, report.getBodyTemperatureLevel());
-                intent.putExtra(AddEditReportActivity.EXTRA_NOTE, report.getNote());
-                startActivityForResult(intent, EDIT_REPORT_REQUEST);
-            }
+        adapter.setOnItemClickListener(report -> {
+            Intent intent = new Intent(getActivity(), AddEditReportActivity.class);
+            intent.putExtra(AddEditReportActivity.EXTRA_ID, report.getId());
+            intent.putExtra(AddEditReportActivity.EXTRA_DATE, report.getCreationDate());
+            intent.putExtra(AddEditReportActivity.EXTRA_BLOODPRESSURE, report.getBloodPressure());
+            intent.putExtra(AddEditReportActivity.EXTRA_BODYTEMPERATURE, report.getBodyTemperature());
+            intent.putExtra(AddEditReportActivity.EXTRA_BLOODPRESSUREPRIORITY, report.getBloodPressureLevel());
+            intent.putExtra(AddEditReportActivity.EXTRA_BODYTEMPERATUREPRIORITY, report.getBodyTemperatureLevel());
+            intent.putExtra(AddEditReportActivity.EXTRA_NOTE, report.getNote());
+            startActivityForResult(intent, EDIT_REPORT_REQUEST);
         });
     }
 
@@ -106,7 +105,6 @@ public class ReportFragment extends Fragment {
 
             if(id == -1){
                 Toast.makeText(getContext(), "Il report non può essere modificato", Toast.LENGTH_SHORT).show();
-                return;
             }
             else {
                 int bodyTemperature = data.getIntExtra(AddEditReportActivity.EXTRA_BODYTEMPERATURE,0);
@@ -136,6 +134,14 @@ public class ReportFragment extends Fragment {
             case R.id.delete_all_reports:
                 reportViewModel.deleteAllReports();
                 Toast.makeText(getContext(), "Report cancellati", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.max_priority:
+                reportViewModel.findMaxPriorityReports(userId).observe(getViewLifecycleOwner(), reports -> {
+                    adapter.setReports(reports);
+                });
+                return true;
+            case R.id.all_reports:
+                reportViewModel.getAllReports().observe(getViewLifecycleOwner(), reports -> adapter.setReports(reports));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

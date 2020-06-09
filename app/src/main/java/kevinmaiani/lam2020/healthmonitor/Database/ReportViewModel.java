@@ -22,7 +22,8 @@ public class ReportViewModel  extends AndroidViewModel {
     }
 
     public List<Report> findReportForUser(int userId, Date creationDate) {return reportDao.findReportForUser(userId, creationDate);}
-    public List<Report> findReporyByUserId(int userId) {return reportDao.findReporyByUserId(userId);};
+    public List<Report> findReporyByUserId(int userId) {return reportDao.findReporyByUserId(userId);}
+    public LiveData<List<Report>> findMaxPriorityReports(int userId) {return reportDao.findMaxPriorityReports(userId);}
     public void insert(Report report) { reportDao.insert(report);}
     public void update(Report report) { reportDao.update(report);}
     public void delete(Report report) { reportDao.delete(report);}
